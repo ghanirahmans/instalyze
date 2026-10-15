@@ -104,7 +104,7 @@ Output build ada di folder `dist/`. Untuk mengecek hasil build:
 npm run preview
 ```
 
-Karena berupa static site, project ini bisa dideploy ke layanan static hosting seperti Vercel (Framework Preset: Vite, Output Directory: `dist`). Untuk deployment publik, jangan deploy file Instagram pribadi — biarkan user memilih file lewat browser. Tombol **Muat data** tidak muncul di production, sehingga aplikasi tidak mencoba membaca file JSON dari server.
+Karena berupa static site, project ini bisa dideploy ke Vercel (Framework Preset: Vite, Output Directory: `dist`). Untuk deployment publik, jangan deploy file Instagram pribadi. Biarkan user memilih file lewat browser. Tombol **Muat data** tidak muncul di production, sehingga aplikasi tidak mencoba membaca file JSON dari server.
 
 ## SEO dan Sitemap
 
@@ -112,7 +112,7 @@ Karena berupa static site, project ini bisa dideploy ke layanan static hosting s
 
 Default URL production: `https://instalyze.ghaniyyirrahmans.me` (bisa dioverride dengan `SITE_URL=https://domain-baru.example npm run seo`).
 
-Sitemap memuat tiga halaman: `/`, `/cara-download-data-instagram/` (versi Indonesia), dan `/how-to-download-instagram-data/` (versi Inggris). Kedua halaman panduan adalah file HTML statis di `public/` yang saling merujuk lewat tag `hreflang`. Copy halaman utama ditulis bilingual Indonesia-Inggris untuk menjangkau pencarian seperti "cek tidak follow back Instagram" dan "Instagram unfollowers".
+Sitemap memuat tiga halaman: `/`, `/cara-download-data-instagram/` (versi Indonesia), dan `/how-to-download-instagram-data/` (versi Inggris). Kedua halaman panduan adalah file HTML statis di `public/` yang saling merujuk lewat tag `hreflang`. Copy halaman utama ditulis bilingual Indonesia-Inggris agar menjangkau pencarian seperti "cek tidak follow back Instagram" dan "Instagram unfollowers".
 
 ## Struktur Project
 
@@ -156,8 +156,8 @@ node index.js
 
 Catatan parsing CLI:
 
-- File JSON dapat berupa root array maupun memiliki key `relationships_followers` atau `relationships_following`.
-- Username dinormalkan terlebih dahulu: di-trim, di-lowercase, di-deduplikasi, lalu diurutkan A-Z.
+- File JSON bisa langsung berupa array, atau memakai key `relationships_followers` / `relationships_following`.
+- Username disiapkan sebelum dipakai: spasi dipotong, huruf dikucilkan, duplikat dihapus, lalu diurutkan A-Z.
 
 ## Contoh Output CLI
 
