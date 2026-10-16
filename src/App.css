@@ -886,3 +886,27 @@ input:focus-visible,
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+.disclaimer-bar {
+  display: flex;
+  gap: var(--space-2, 0.5rem);
+  align-items: flex-start;
+  margin-top: var(--space-4, 1rem);
+  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+  border-radius: var(--radius, 0.5rem);
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: #92400e;
+}
+
+.disclaimer-icon {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+}
+
+.disclaimer-text {
+  flex: 1;
+}

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  AlertTriangle,
   ArrowDownAZ,
   ArrowUpAZ,
   BarChart3,
@@ -68,7 +69,13 @@ function extractUsername(item) {
 
 function uniqueSortedUsernames(values) {
   return [
-    ...new Set(values.map((name) => String(name ?? "").trim().toLowerCase())),
+    ...new Set(
+      values.map((name) =>
+        String(name ?? "")
+          .trim()
+          .toLowerCase(),
+      ),
+    ),
   ]
     .filter(Boolean)
     .sort((a, b) => a.localeCompare(b));
@@ -325,10 +332,7 @@ function App() {
               <CircleHelp size={18} />
               Cara dapat JSON
             </button>
-            <a
-              className="github-link"
-              href="/cara-download-data-instagram/"
-            >
+            <a className="github-link" href="/cara-download-data-instagram/">
               <FileJson size={18} />
               Panduan data
             </a>
@@ -364,11 +368,7 @@ function App() {
           </section>
         )}
 
-        <section
-          className="privacy-bar"
-          id="privacy"
-          aria-label="Privasi data"
-        >
+        <section className="privacy-bar" id="privacy" aria-label="Privasi data">
           <ShieldCheck size={22} />
           <div>
             <strong>Data diproses lokal di browser</strong>
@@ -564,11 +564,29 @@ function App() {
                 : "Tidak ada username yang cocok."
             }
           />
+          <section
+            className="disclaimer-bar"
+            aria-label="Catatan validitas profil"
+          >
+            <AlertTriangle
+              size={16}
+              className="disclaimer-icon"
+              aria-hidden="true"
+            />
+            <span className="disclaimer-text">
+              Link profil dihasilkan otomatis dari username di file JSON
+              Instagram. Jika link menampilkan "Maaf, halaman ini tidak
+              tersedia" atau "user not found", akun sudah dihapus,
+              dinonaktifkan, atau tidak dapat diakses di Instagram — bukan bug
+              aplikasi. Kami tidak memverifikasi keberadaan profil secara
+              real-time agar data tetap diproses 100% di browser Anda.
+            </span>
+          </section>
         </section>
 
         <footer className="app-footer">
           Program ini dibuat dan dikembangkan oleh <strong>ghanirahmans</strong>{" "}
-          untuk keperluan portofolio.
+          untuk sebagai portofolio.
         </footer>
       </section>
 

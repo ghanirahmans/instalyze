@@ -188,9 +188,42 @@ Aplikasi ini tidak memiliki API upload. Selama tidak ditambahkan backend baru ya
 
 Folder `data/` hanya dibaca lewat middleware dev server Vite saat mode development, dan tombolnya tidak ikut di-build ke production. File Instagram pribadi tidak perlu dan sebaiknya tidak ikut dideploy.
 
+## Batasan & Catatan: Validitas Profil dalam File JSON
+
+> ⚠️ Aplikasi ini **hanya mem-parsing file JSON ekspor Instagram**. Ia tidak memverifikasi secara real-time apakah profil masih ada di Instagram. Jika Anda menemukan link yang **"Maaf, halaman ini tidak tersedia"** atau **"user not found"**, ini **bukan bug aplikasi** — profilnya memang sudah tidak ada di Instagram (dihapus, dinonaktifkan, diblokir, atau nama sudah dipakai akun lain).
+
+Instagram memberi tahu aplikasi kami hanya daftar username — **kami tidak tahu apakah profile itu masih ada atau sudah tidak**. Berikut kemungkinan munculnya "link tidak ditemukan":
+
+| Kondisi | Penjelasan |
+|---|---|
+| Username ada, tapi **profil sudah dihapus permanent** | Instagram sudah menghapus akunnya. Username bisa dipakai kembali oleh akun lain. |
+| Username ada, tapi **dinonaktifkan sementara** | Akun "cuti" — link akan error sampai akun diaktifkan kembali. |
+| Username ada, tapi **diblokir / ditangguhkan** | Instagram menampilkan halaman error, sama seperti profil yang dihapus. |
+| **Username typo / format tak valid** | Data di file kadang punya spasi, karakter aneh, atau duplikat. Aplikasi sudah trim + lowercase + dedup otomatis. |
+| **`href` link rusak / kosong di file JSON** | Beberapa versi ekspor Instagram tidak mengisi field `href`. Aplikasi konstruksi ulang link dari username. |
+
+### Kenapa aplikasi tidak memverifikasi keberadaan profil secara real-time?
+
+Mengecek apakah profil masih ada butuh **permintaan HTTP ke `instagram.com/<username>/`** — ini termasuk operasi *network*, yang:
+
+1. **Kena rate limit** — Instagram membatasi ~200 request/jam per IP anonim.
+2. **Kena blokir ASN** — semua VPS/WARP/Tor/VPN dapat error `429` / blank body di request pertama, karena Instagram memblokir ASN (network ID) level jaringan, **bukan** hanya IP per-IP.
+3. **Melanggar privasi & offline design** — aplikasi ini dirancang untuk **100% offline di browser**. Kami tidak mengirim data apa pun ke server Instagram.
+
+Karena itu, aplikasi **hanya menampilkan link profil apa adanya** dari `instagram.com/<username>/`, dan **Instagram-lah yang menentukan** apakah halamannya ada atau tidak.
+
+### Apa yang sudah dilakukan aplikasi?
+
+- ✅ Parsing fleksibel: mengenali `relationships_followers` / `relationships_following` dan array biasa.
+- ✅ Fallback ekstraksi username dari `string_list_data[].value`, `title`, atau `value`.
+- ✅ Normalisasi: trim spasi, lowercase, hapus duplikat, urut A→Z.
+- ✅ Konstruksi link otomatis jika `href` tidak ada di file.
+- ✅ Validasi struktur JSON + error handling yang jelas.
+- ❌ **Tidak memverifikasi keberadaan profil secara real-time** — disengaja, agar tetap offline & aman.
+
 ## Credit
 
-Program ini dibuat dan dikembangkan oleh **ghanirahmans** untuk keperluan portofolio.
+Program ini dibuat dan dikembangkan oleh **ghanirahmans** untuk sebagai portofolio.
 
 ## License
 
