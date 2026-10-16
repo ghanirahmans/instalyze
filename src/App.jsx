@@ -338,7 +338,7 @@ function App() {
             </a>
             <a
               className="github-link"
-              href="https://github.com/ghanirahmans/Analyzer-Connection-Instagram"
+              href="https://github.com/ghanirahmans/instalyze"
               target="_blank"
               rel="noreferrer"
             >

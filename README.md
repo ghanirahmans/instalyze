@@ -117,7 +117,7 @@ Sitemap memuat tiga halaman: `/`, `/cara-download-data-instagram/` (versi Indone
 ## Struktur Project
 
 ```text
-Analyzer-Connection-Instagram
+instalyze
 ├── data/                              # followers_1.json + following.json (git-ignored)
 ├── public/
 │   ├── cara-download-data-instagram/
